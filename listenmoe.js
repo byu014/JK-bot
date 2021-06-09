@@ -55,7 +55,8 @@ client.once('ready', () => {
 client.on('message', async message => {
     // Voice only works in guilds, if the message does not come from a guild,
     // we ignore it
-    if (!message.guild || message.content[0] !== prefix || message.author.bot) return;
+    // !message.guild
+    if ( message.content[0] !== prefix || message.author.bot) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
     if (!client.commands.has(command)){

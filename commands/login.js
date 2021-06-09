@@ -6,9 +6,14 @@ module.exports = {
 	name: 'login',
 	description: 'login to listen.moe',
 	async execute(message, args, ops) {
-        if(args.length !== 2){
+        if(message.channel.type !== 'dm'){
+            message.channel.send("DM listen.moe bot the following to login: !login username password");
             message.delete();
+            return;
+        }
+        if(args.length !== 2){
             message.channel.send('syntax: !login username password');
+            // message.delete();
             return;
         }
 
@@ -19,6 +24,7 @@ module.exports = {
                 .then(async res => {
                     if(res.data.errors){
                         message.channel.send(`${res.data.errors[0].message}`); 
+                        // message.delete();
                     }
                     else{
                         // await User.deleteMany();
@@ -30,7 +36,8 @@ module.exports = {
                         currentUser.token = res.data.data.login.token;
                         await currentUser.save();
                         console.log(currentUser);
-                        message.channel.send(`Sucessfully logged in as ${res.data.data.login.user.displayName}!`);
+                        message.channel.send(`Sucessfully logged in as ${res.data.data.login.user.displayName}! Please delete your previous message as it contains sensitive information`);
+                        // message.delete();
                     }
                 })
         }

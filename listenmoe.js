@@ -7,6 +7,12 @@ const axios = require('axios');
 const OpusScript = require("opusscript");
 const fs = require('fs');
 const mongoose = require('mongoose');
+const WebSocket = require('ws');
+const {connectjpop, connectkpop, connectws} = require('./websocket');
+const { sub } = require('ffmpeg-static');
+const { serverCheck } = require('./utils/servercheck');
+
+// const wssjpop = new WebSocket.Server({port: 8082});
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/listenmoe';
 // const { OpusEncoder } = require('@discordjs/opus');
 // const encoder = new OpusEncoder(48000, 2);
@@ -35,24 +41,40 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 const token = process.env.DISCORD_TOKEN;
-const active = new Map();
 const prefix = '!';
 let ops = {
-    dispatcher: null,
+    dispatcher: {},
+    currentSong: {
+        jpop: null,
+        kpop: null,
+    },
+    modes:{
+        jpop:{
+            stream: 'https://listen.moe/stream',
+            wss: 'wss://listen.moe/gateway_v2'
+        },
+        kpop:{
+            stream: 'https://listen.moe/kpop/stream',
+            wss: 'wss://listen.moe/kpop/gateway_v2'
+        }
+    },
     headers: {
         'Content-Type': 'application/json',
         Accept: '*/*',
     }
 };
 
+// connectjpop(ops);
+// connectkpop(ops);
+connectws(ops);
+
 client.login(token);
 
-const dispatcher = 
 client.once('ready', () => {
-	
+	ops.client = client;
 });
 
-client.on('message', async message => {
+client.on('message', async (message,channelID) => {
     // Voice only works in guilds, if the message does not come from a guild,
     // we ignore it
     // !message.guild
@@ -72,3 +94,19 @@ client.on('message', async message => {
 	}
 });
 
+client.on('voiceStateUpdate', async (oldState, newState) => {
+    // check for bot
+    console.log(newState.channel=== null)
+    if (oldState.member.user.bot){
+        if(oldState.channel === undefined && newState.channel !== undefined) {
+
+            // User Joins a voice channel
+
+         } else if(newState.channel === null){
+           // new state isnt a voice channel
+           delete ops.dispatcher[newState.guild.id];
+         }
+    }
+
+    // the rest of your code
+});

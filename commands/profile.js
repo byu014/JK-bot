@@ -26,7 +26,7 @@ module.exports = {
                 .then(res => {
                     if(res.data.data.user){
                         const {author} = message;
-                        const exampleEmbed = new Discord.MessageEmbed()
+                        const embed = new Discord.MessageEmbed()
                         .setColor('#FF015B')
                         .setTitle(`${res.data.data.user.username}'s Profile`)
                         .setURL(`https://listen.moe/u/${res.data.data.user.username}`)
@@ -36,7 +36,7 @@ module.exports = {
                             { name: 'Songs uploaded', value: res.data.data.user.uploads.count,  },
                         )
                         .setThumbnail(res.data.data.user.avatarImage !== null ? `https://cdn.listen.moe/avatars/${res.data.data.user.avatarImage}` : "https://listen.moe/_nuxt/img/logo-square-64.248c1f3.png")
-                        message.channel.send(exampleEmbed); 
+                        message.channel.send(embed);
                     }
                     else{
                         message.channel.send('User does not exist!');

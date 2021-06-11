@@ -96,7 +96,6 @@ client.on('message', async (message,channelID) => {
 
 client.on('voiceStateUpdate', async (oldState, newState) => {
     // check for bot
-    console.log(newState.channel=== null)
     if (oldState.member.user.bot){
         if(oldState.channel === undefined && newState.channel !== undefined) {
 

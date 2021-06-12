@@ -8,6 +8,7 @@ const { serverCheck } = require('../utils/servercheck');
 module.exports = {
 	name: 'song',
 	description: 'display current song on listen.moe',
+    syntax: '!song',
 	async execute(message, args, ops) {
         const server = await serverCheck(message.guild.id);
         let imagePath = 'https://listen.moe/_nuxt/img/logo-square-64.248c1f3.png';

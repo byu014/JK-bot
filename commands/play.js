@@ -2,7 +2,8 @@ const { serverCheck } = require("../utils/servercheck");
 
 module.exports = {
 	name: 'play',
-	description: 'plays music from listen.moe',
+	description: 'plays/resumes music from listen.moe',
+	syntax: '!play',
 	async execute(message, args, ops) {
 		if (message.member.voice.channel) {
 			const connection = await message.member.voice.channel.join();
@@ -10,7 +11,7 @@ module.exports = {
 			if(!ops.dispatcher[message.guild.id]){
 				const server = await serverCheck(message.guild.id);
 				const audioLink = ops.modes[server.mode].stream;
-				const dispatcher = connection.play(audioLink ,{volume: 0.2});
+				const dispatcher = connection.play(audioLink ,{volume: server.volume});
 				await connection.voice.setSelfDeaf(true);
 				ops.dispatcher[message.guild.id] = dispatcher;
 			}

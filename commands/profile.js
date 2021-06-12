@@ -6,6 +6,7 @@ const Discord = require('discord.js');
 module.exports = {
 	name: 'profile',
 	description: 'view profile',
+    syntax: '!profile username',
 	async execute(message, args, ops) {
         if(args.length !== 1){
             message.channel.send('syntax: !profile username')

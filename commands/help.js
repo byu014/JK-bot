@@ -1,9 +1,7 @@
-const { serverCheck } = require("../utils/servercheck");
-
 module.exports = {
-	name: 'pause',
-	description: 'pauses music for listen.moe bot',
-	syntax: '!pause',
+	name: 'help',
+	description: 'help page',
+    syntax: '!help',
 	async execute(message, args, ops) {
 		if (message.member.voice.channel) {
 			message.member.voice.channel.join();

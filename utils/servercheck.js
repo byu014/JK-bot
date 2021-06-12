@@ -5,7 +5,7 @@ const User = require('../models/server');
 module.exports.serverCheck = async function(serverID){
     let server = await Server.findOne({serverID: serverID})
     if(server === null){
-        server = new Server({serverID: serverID, mode:'jpop', });
+        server = new Server({serverID: serverID, mode:'jpop',volume: .2 });
     }
     await server.save();
     return server;

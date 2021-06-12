@@ -4,7 +4,8 @@ const {data} = require('../APIrequests/login');
 
 module.exports = {
 	name: 'login',
-	description: 'login to listen.moe',
+	description: 'login to listen.moe. NOTE: only use in DM with listen.moe bot',
+    syntax: '!login username password',
 	async execute(message, args, ops) {
         if(message.channel.type !== 'dm'){
             message.channel.send("DM listen.moe bot the following to login: !login username password");

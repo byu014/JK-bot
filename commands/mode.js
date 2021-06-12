@@ -2,7 +2,8 @@ const {serverCheck} = require('../utils/servercheck')
 
 module.exports = {
 	name: 'mode',
-	description: 'choose to have listen.moe stream jpop or kpop',
+	description: 'check or choose to have listen.moe stream jpop or kpop',
+    syntax: '!mode or !mode jpop/kpop',
 	async execute(message, args, ops) {
         if(args.length === 0){
             const server = await serverCheck(message.guild.id);

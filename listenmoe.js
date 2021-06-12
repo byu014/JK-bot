@@ -85,7 +85,19 @@ client.on('message', async (message,channelID) => {
         message.reply('Command does not exist')
         return;
     } 
-    
+    if(command === 'help'){
+        try {
+            const embed = new Discord.MessageEmbed().setColor('#FF015B').setTitle('Help page')
+            for(let c of client.commands){
+                embed.addField(`${prefix}${c[0]}: ${c[1].description}`, `syntax: ${c[1].syntax}`);
+            }
+            message.channel.send(embed);
+            return;
+        }catch (error){
+            console.error(error);
+            message.reply(error.response.statusText);
+        }
+    }
     try {
 		await client.commands.get(command).execute(message, args, ops);
 	} catch (error) {

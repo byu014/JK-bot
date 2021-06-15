@@ -1,7 +1,6 @@
 const User = require('../models/user');
 let axios = require('axios');
 const Discord = require('discord.js');
-const { serverCheck } = require('../utils/servercheck');
 const {data} = require('../APIrequests/checkfavorites');
 const { userCheck } = require('../utils/usercheck');
 module.exports = {
@@ -14,7 +13,6 @@ module.exports = {
             return;
         }
         try{
-            const server = await serverCheck(message.guild.id);
             const user = await userCheck(message.author.id);
             const token = user.token;
             const username = user.username;

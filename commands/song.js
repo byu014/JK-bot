@@ -17,10 +17,12 @@ module.exports = {
         }
         const embed = await new Discord.MessageEmbed()
             .setColor('#FF015B')
-            .setTitle(`${ops.currentSong[server.mode].title}`)
+            .setTitle(`${ops.currentSong[server.mode].titleRomaji ? ops.currentSong[server.mode].titleRomaji : ops.currentSong[server.mode].title}`)
+            .setURL(`https://listen.moe/music?q=${ops.currentSong[server.mode].id}`)
             .addFields(
                 { name: 'Artist', value: ops.currentSong[server.mode].artists[0].name },
                 { name: 'Duration', value:`${Math.floor(ops.currentSong[server.mode].duration/60)}:${ops.currentSong[server.mode].duration % 60}` },
+                {name: 'ID', value: ops.currentSong[server.mode].id},
             )
             .setThumbnail(imagePath)
         message.channel.send(embed);	

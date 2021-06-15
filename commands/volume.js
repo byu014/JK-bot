@@ -16,15 +16,19 @@ module.exports = {
                 return;
             }
             const volume = parseInt(args[0]);
-            if(volume < 0 || volume > 100){
+            if(volume === NaN || volume === undefined || volume < 0 || volume > 100){
                 message.channel.send('Choose a value from 0 to 100');
                 return;
             }
-			message.member.voice.channel.join();
             server.volume = volume / 100;
-            ops.dispatcher[message.guild.id] = ops.dispatcher[message.guild.id].player.voiceConnection.play(ops.modes[server.mode].stream ,{volume: server.volume});
+            if(ops.dispatcher[message.guild.id]){
+                message.member.voice.channel.join();
+                ops.dispatcher[message.guild.id].setVolume(server.volume);
+                return;
+			}
             message.channel.send(`Volume updated to ${server.volume * 100}%`);
             await server.save();
+            // ops.dispatcher[message.guild.id] = ops.dispatcher[message.guild.id].player.voiceConnection.play(ops.modes[server.mode].stream ,{volume: server.volume});
         } else {
             message.reply('You need to join a voice channel first!');
         }

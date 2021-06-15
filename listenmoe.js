@@ -72,6 +72,7 @@ client.login(token);
 
 client.once('ready', () => {
 	ops.client = client;
+    client.user.setActivity('!help', { type: 'PLAYING' })
 });
 
 client.on('message', async (message,channelID) => {
@@ -82,7 +83,7 @@ client.on('message', async (message,channelID) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
     if (!client.commands.has(command)){
-        message.reply('Command does not exist')
+        // message.reply('Command does not exist')
         return;
     } 
     if(command === 'help'){
@@ -102,7 +103,7 @@ client.on('message', async (message,channelID) => {
 		await client.commands.get(command).execute(message, args, ops);
 	} catch (error) {
 		console.error(error);
-		message.reply(error.response.statusText);
+		// message.reply(error.response.statusText);
 	}
 });
 

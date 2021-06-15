@@ -26,7 +26,7 @@ module.exports = {
             data.variables = {
                 "username": args.length ? args[0] : username,
                 "offset": 0,
-                "count": 20,
+                "count": 25,
                 "kpop" : false,
             }
 
@@ -37,7 +37,7 @@ module.exports = {
                 .setColor('#FF015B')
                 .setTitle(`${data.variables.username}'s Favorites`)
                 .setURL(`https://listen.moe/u/${data.variables.username}/favorites`)
-            let i = 1;
+            let i = 0;
             axios.post('https://listen.moe/graphql', data, {headers})
                 .then(res => {
                     if(!res.data.data.user){
@@ -48,13 +48,13 @@ module.exports = {
                     const favorites = res.data.data.user.favorites.favorites
                     
                     for(let favorite of favorites){
+                        i++;
                         embed.addFields(
                             { name: '\u200B', value: `${i}. ${favorite.song.titleRomaji  ? favorite.song.titleRomaji : favorite.song.title} by ${favorite.song.artists[0].nameRomaji ? favorite.song.artists[0].nameRomaji : favorite.song.artists[0].name} | songID: ${favorite.song.id}`},
 
                         )
-                        i++;
                     }
-                    
+                    data.variables.count -= i;
                 })
                 .then(() => {
                     if(!userExists){
@@ -66,11 +66,11 @@ module.exports = {
                             const favorites = res.data.data.user.favorites.favorites
                             
                             for(let favorite of favorites){
+                                i++;
                                 embed.addFields(
                                     { name: '\u200B', value: `${i}. ${favorite.song.titleRomaji  ? favorite.song.titleRomaji : favorite.song.title} by ${favorite.song.artists[0].nameRomaji ? favorite.song.artists[0].nameRomaji : favorite.song.artists[0].name} | songID: ${favorite.song.id}`},
 
                                 )
-                                i++;
                             }
                             
                         })

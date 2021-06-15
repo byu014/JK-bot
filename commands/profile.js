@@ -2,28 +2,34 @@ const User = require('../models/user');
 let axios = require('axios');
 const {data} = require('../APIrequests/profile');
 const Discord = require('discord.js');
+const user = require('../models/user');
+const { userCheck } = require('../utils/usercheck');
 
 module.exports = {
 	name: 'profile',
-	description: 'view profile',
-    syntax: '!profile username',
+	description: 'view self or profile of specified user',
+    syntax: '!profile or !profile username',
 	async execute(message, args, ops) {
-        if(args.length !== 1){
+        if(args.length > 1){
             message.channel.send('syntax: !profile username')
             return
         }
 		try{
+            const user = await userCheck(message.author.id);
+            if(!user.token && !args.length){
+                message.channel.send('Must be logged into to view self profile');
+                return;
+            }
             data.variables = {
-                "username": args[0],
+                "username": args.length ? args[0] : user.username,
                 "userOffset": 0,
                 "userCount": 10,
                 "systemOffset": 0,
                 "systemCount": 20
             };
             const {headers} = ops;
-            //headers.Authorization = `Bearer ${token}`
-            data.variables.username = args[0];            
-            axios.post('https://listen.moe/graphql', data, {headers:{headers}})
+            //headers.Authorization = `Bearer ${token}`          
+            axios.post('https://listen.moe/graphql', data, {headers})
                 .then(res => {
                     if(res.data.data.user){
                         const {author} = message;

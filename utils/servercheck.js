@@ -1,5 +1,4 @@
 const Server = require('../models/server');
-const User = require('../models/server');
 
 //creates db entry for server if it does not already exist
 module.exports.serverCheck = async function(serverID){

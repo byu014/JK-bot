@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     discordID: String,
     token: String,
+    username: String,
 })
 
 module.exports = mongoose.model('User', UserSchema);

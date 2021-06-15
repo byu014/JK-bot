@@ -4,12 +4,11 @@ if(process.env.NODE_ENV !== "production"){
 
 const Discord = require('discord.js');
 const axios = require('axios');
-const OpusScript = require("opusscript");
+// const OpusScript = require("opusscript");
 const fs = require('fs');
 const mongoose = require('mongoose');
 const WebSocket = require('ws');
 const {connectjpop, connectkpop, connectws} = require('./websocket');
-const { sub } = require('ffmpeg-static');
 const { serverCheck } = require('./utils/servercheck');
 
 // const wssjpop = new WebSocket.Server({port: 8082});
@@ -43,7 +42,6 @@ for (const file of commandFiles) {
 const token = process.env.DISCORD_TOKEN;
 const prefix = '!';
 let ops = {
-    client: null,
     dispatcher: {},
     currentSong: {
         jpop: null,
@@ -72,7 +70,6 @@ connectws(ops);
 client.login(token);
 
 client.once('ready', () => {
-	ops.client = client;
     client.user.setActivity('!help', { type: 'PLAYING' })
 });
 

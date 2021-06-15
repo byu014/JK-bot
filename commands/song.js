@@ -21,7 +21,7 @@ module.exports = {
             .setURL(`https://listen.moe/music?q=${ops.currentSong[server.mode].id}`)
             .addFields(
                 { name: 'Artist', value: ops.currentSong[server.mode].artists[0].name },
-                { name: 'Duration', value:`${Math.floor(ops.currentSong[server.mode].duration/60)}:${ops.currentSong[server.mode].duration % 60}` },
+                { name: 'Duration', value:`${Math.floor(ops.currentSong[server.mode].duration/60)}:${ops.currentSong[server.mode].duration % 60 < 10 ? 0 : ''}${ops.currentSong[server.mode].duration % 60}` },
                 {name: 'ID', value: ops.currentSong[server.mode].id},
             )
             .setThumbnail(imagePath)

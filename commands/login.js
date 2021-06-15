@@ -1,6 +1,7 @@
 const User = require('../models/user');
 let axios = require('axios');
 const {data} = require('../APIrequests/login');
+const {userCheck} = require('../utils/usercheck')
 
 module.exports = {
 	name: 'login',
@@ -21,7 +22,7 @@ module.exports = {
 		try{
             data.variables = {username: args[0], password: args[1]};
             const {headers} = ops;
-            const res = await axios.post('https://listen.moe/graphql', data, {headers:{headers}})
+            const res = await axios.post('https://listen.moe/graphql', data, {headers})
                 .then(async res => {
                     if(res.data.errors){
                         message.channel.send(`${res.data.errors[0].message}`); 
@@ -29,12 +30,9 @@ module.exports = {
                     }
                     else{
                         // await User.deleteMany();
-                        let currentUser = await User.findOne({discordID: message.author.id})
-                        if(currentUser === null){
-                            currentUser = new User({discordID: message.author.id, token: null});
-                            console.log('user created', currentUser);
-                        }
+                        const currentUser = await userCheck(message.author.id);
                         currentUser.token = res.data.data.login.token;
+                        currentUser.username = res.data.data.login.user.displayName;
                         await currentUser.save();
                         console.log(currentUser);
                         message.channel.send(`Sucessfully logged in as ${res.data.data.login.user.displayName}! Please delete your previous message as it contains sensitive information`);

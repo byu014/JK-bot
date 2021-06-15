@@ -43,6 +43,7 @@ for (const file of commandFiles) {
 const token = process.env.DISCORD_TOKEN;
 const prefix = '!';
 let ops = {
+    client: null,
     dispatcher: {},
     currentSong: {
         jpop: null,

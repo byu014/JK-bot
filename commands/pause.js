@@ -6,10 +6,10 @@ module.exports = {
 	syntax: '!pause',
 	async execute(message, args, ops) {
 		if (message.member.voice.channel) {
-			message.member.voice.channel.join();
-			const server = await serverCheck(message.guild.id)
 			if(ops.dispatcher[message.guild.id]){
+				message.member.voice.channel.join();
 				ops.dispatcher[message.guild.id].pause(true);
+				message.react(':HuTao_Sus:854177109349498911')
 			}
         } else {
             message.reply('You need to join a voice channel first!');

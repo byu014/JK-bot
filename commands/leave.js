@@ -4,9 +4,10 @@ module.exports = {
 	syntax: '!leave',
 	execute(message, args, ops) {
 		if(message.member.voice.channel){
-			message.member.voice.channel.leave();
 			if(ops.dispatcher[message.guild.id]){
+				message.member.voice.channel.leave();
 				delete ops.dispatcher[message.guild.id]; 
+				message.react(':HuTao_Yawn:854176370842271764');
 			}
 		}
 	},

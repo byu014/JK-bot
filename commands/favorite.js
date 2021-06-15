@@ -19,8 +19,9 @@ module.exports = {
             const user = await userCheck(message.author.id);
             const token = user.token;
             const username = user.username;
+            
             if(username === null){
-                channel.message.send('You need to be logged in to use this feature');
+                message.channel.send('You need to be logged in to use this feature');
                 return;
             }
             favoritesData.variables = {
@@ -34,7 +35,7 @@ module.exports = {
             const {headers} = ops;
             headers.Authorization = `Bearer ${token}`;
             let alreadyFavorited = false;
-            
+
             axios.post('https://listen.moe/graphql', favoritesData, {headers})
                 .then(res => {
                     const favorites = res.data.data.user.favorites.favorites

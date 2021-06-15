@@ -3,7 +3,7 @@ const {serverCheck} = require('../utils/servercheck')
 module.exports = {
 	name: 'volume',
 	description: 'checks or sets the listen.moe bot\'s volume',
-    syntax: '!volume or 0-100',
+    syntax: '!volume or !volume 0-100',
 	async execute(message, args, ops) {
 		if (message.member.voice.channel) {
             const server = await serverCheck(message.guild.id);
@@ -24,11 +24,10 @@ module.exports = {
             if(ops.dispatcher[message.guild.id]){
                 message.member.voice.channel.join();
                 ops.dispatcher[message.guild.id].setVolume(server.volume);
-                return;
 			}
-            message.channel.send(`Volume updated to ${server.volume * 100}%`);
+            // message.channel.send(`Volume updated to ${server.volume * 100}%`);
+            message.react(':HuTao_Cute:854185648301539338');
             await server.save();
-            // ops.dispatcher[message.guild.id] = ops.dispatcher[message.guild.id].player.voiceConnection.play(ops.modes[server.mode].stream ,{volume: server.volume});
         } else {
             message.reply('You need to join a voice channel first!');
         }

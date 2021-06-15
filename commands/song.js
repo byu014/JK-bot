@@ -15,7 +15,6 @@ module.exports = {
         if(ops.currentSong[server.mode].albums.length && ops.currentSong[server.mode].albums[0].image !== null){
             imagePath = 'https://cdn.listen.moe/covers/' + ops.currentSong[server.mode].albums[0].image;
         }
-        console.log(imagePath);
         const embed = await new Discord.MessageEmbed()
             .setColor('#FF015B')
             .setTitle(`${ops.currentSong[server.mode].titleRomaji ? ops.currentSong[server.mode].titleRomaji : ops.currentSong[server.mode].title}`)

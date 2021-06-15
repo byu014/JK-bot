@@ -6,7 +6,7 @@ const {data} = require('../APIrequests/checkfavorites');
 const { userCheck } = require('../utils/usercheck');
 module.exports = {
 	name: 'favorites',
-	description: 'lists your or specified user\'s favorite songs',
+	description: 'lists 25 of your or specified user\'s favorite songs',
     syntax: '!favorites or !favorites username',
 	async execute(message, args, ops) {
 		if(args.length > 1){
